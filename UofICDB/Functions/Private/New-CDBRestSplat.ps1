@@ -1,30 +1,29 @@
 function New-CDBRestSplat {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [System.Management.Automation.PSCredential]$Credential,
-        [Parameter(Mandatory=$true)]
-        [String]$Category,
+        [Parameter(Mandatory=$true)]    
+        [String]$RelativeURI,
         [String]$Filter
     )
     
     begin {
-        
+        if($Script:Authorization -eq [String]::Empty){
+            Write-Verbose -Message 'No CDB connection established. Please provide credentials.'
+            New-CDBConnection
+        }
     }
     
     process {
         if($Filter -and $Filter[0] -ne '&'){
             $Filter = "&$($Filter)"
         }
-
-        $EncodedText = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $Credential.UserName,$Credential.GetNetworkCredential().Password)))
         
         $IVRSplat = @{
             'Headers' = @{
-                'Authorization' = 'Basic {0}' -f $EncodedText
+                'Authorization' = $Script:Authorization
             }
 
-            'Uri' = '{0}{1}?format=json{2}' -f $Script:Settings.CDBURI, $Category, $Filter
+            'Uri' = '{0}{1}?format=json{2}' -f $Script:Settings.CDBURI,$RelativeURI,$Filter
         }
 
         $IVRSplat
