@@ -10,4 +10,4 @@ Get-ChildItem -Path $FunctionPath -Filter "*.ps1" -Recurse | ForEach-Object -Pro
 $Script:Settings = Get-Content -Path $SettingsPath | ConvertFrom-Json
 
 $Script:Authorization = [String]::Empty
-$Script:SubClassURIs = @()
+$Script:SubClassURIs = @{}

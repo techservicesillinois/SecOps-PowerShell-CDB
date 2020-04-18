@@ -1,9 +1,10 @@
-function New-CDBRestSplat {
+function Invoke-CDBRestCall {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]    
         [String]$RelativeURI,
-        [String]$Filter
+        [String[]]$Filter,
+        [int]$Limit = 20
     )
     
     begin {
@@ -14,19 +15,18 @@ function New-CDBRestSplat {
     }
     
     process {
-        if($Filter -and $Filter[0] -ne '&'){
-            $Filter = "&$($Filter)"
-        }
+        $QueryString = "?format=json&limit=$($Limit)&"
+        $QueryString += $Filter -join '&'
         
         $IVRSplat = @{
             'Headers' = @{
                 'Authorization' = $Script:Authorization
             }
 
-            'Uri' = '{0}{1}?format=json{2}' -f $Script:Settings.CDBURI,$RelativeURI,$Filter
+            'Uri' = "$($Script:Settings.CDBURI)$($RelativeURI)$($QueryString)"
         }
 
-        $IVRSplat
+        Invoke-RestMethod @IVRSplat
     }
     
     end {
