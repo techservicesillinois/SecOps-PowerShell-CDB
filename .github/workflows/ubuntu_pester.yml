@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install dependencies
+      env:
+        TestAPIUser: ${{ secrets.TestAPIUser }}
+        TestAPIPw: ${{ secrets.TestAPIPw }}
       run: Install-Module -Name 'Pester' -Force -SkipPublisherCheck
       shell: pwsh
     - name: Run tests
