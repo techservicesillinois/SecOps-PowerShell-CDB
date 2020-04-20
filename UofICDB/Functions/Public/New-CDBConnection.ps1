@@ -1,3 +1,14 @@
+<#
+.Synopsis
+   This cmdlet will cache your CDB credentials for the session to be used with the other cmdlets in the UofICDB module.
+.DESCRIPTION
+   This cmdlet will cache your CDB credentials for the session to be used with the other cmdlets in the UofICDB module.
+.PARAMETER Credential
+    Your CDB API credentials. This will likely not bet your NetID
+.EXAMPLE
+    $Credential = Get-Credential
+    New-CDBConnection -Credential $Credential
+#>
 function New-CDBConnection {
     [CmdletBinding()]
     param (

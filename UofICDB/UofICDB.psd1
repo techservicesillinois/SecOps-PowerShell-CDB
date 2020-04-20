@@ -12,7 +12,7 @@
 RootModule = 'UofICDB.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '1.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,10 +30,10 @@ CompanyName = 'The University of Illinois'
 Copyright = 'The University of Illinois Board of Trustees'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'A module for returning information from the CDB platform.'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '7.0.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -69,7 +69,7 @@ Copyright = 'The University of Illinois Board of Trustees'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('New-CDBConnection', 'Invoke-CDBRestCall','Get-CDBSubclassSchema','Get-CDBItem')
+FunctionsToExport = @('Get-CDBItem', 'Get-CDBSubclassSchema', 'Invoke-CDBRestCall', 'New-CDBConnection')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -98,7 +98,7 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/ncsa/parfu_archive_tool/blob/master/LICENSE'
+        # LicenseUri = ''
 
         # A URL to the main website for this project.
         # ProjectUri = ''

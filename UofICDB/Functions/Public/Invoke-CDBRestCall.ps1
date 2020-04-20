@@ -1,3 +1,21 @@
+<#
+.Synopsis
+   Makes a REST method call on the given relative URI for CDB. Utilizes credentials created with New-CDBConnection.
+   It is reccomended to use Get-CDBItem unless you specifically have a use case not supported by that cmdlet.
+.DESCRIPTION
+   Makes a REST method call on the given relative URI for CDB. Utilizes credentials created with New-CDBConnection.
+   It is reccomended to use Get-CDBItem unless you specifically have a use case not supported by that cmdlet.
+.PARAMETER RelativeURI
+    The relativeURI you wish to make a call to. Ex: /api/v2/supporthours/4/
+.PARAMETER Filter
+    An optional set of filters for results. Properties for a given SubClass can be found with Get-CDBSubclassSchema.
+.PARAMETER Limit
+    Limit on results returned. The stock default is 20 and this is controled via the settings.json of the module.
+.EXAMPLE
+   Invoke-CDBRestCall -RelativeURI /api/v2/supporthours/4/
+
+   This will return the object located at /api/v2/supporthours/4/
+#>
 function Invoke-CDBRestCall {
     [CmdletBinding()]
     param (
