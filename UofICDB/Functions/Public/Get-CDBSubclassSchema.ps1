@@ -31,7 +31,9 @@ function Get-CDBSubclassSchema {
     }
     
     process {
-        (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].schema).fields
+        $Schema = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].schema).fields
+        $Schema | Add-Member -Name 'Subclass' -MemberType NoteProperty -Value $SubClass
+        $Schema
     }
     
     end {
