@@ -4,7 +4,7 @@ function Invoke-CDBRestCall {
         [Parameter(Mandatory=$true)]    
         [String]$RelativeURI,
         [String[]]$Filter,
-        [int]$Limit = 20
+        [int]$Limit = $Script:Settings.DefaultReturnLimit
     )
     
     begin {

@@ -18,7 +18,7 @@ function Get-CDBItem {
         [String[]]$Filter,
 
         [Parameter(ParameterSetName = 'Filter')]
-        [int]$Limit = 20,
+        [int]$Limit = $Script:Settings.DefaultReturnLimit,
 
         [Parameter(ParameterSetName = 'Id')]
         [int]$Id,
@@ -34,6 +34,9 @@ function Get-CDBItem {
         $Return = [System.Collections.ArrayList]@()
 
         if($Id){
+            #All items have an ID that is accesbible via the item directory but these just return the specific subclass URI for the item.
+            #The actual item properties are not stored on this it is just a redirect to the actual subclass with the information.
+            #So when looking up a specific item we have to run two calls.
             $Redirect = (Invoke-CDBRestCall -RelativeURI "/api/v2/item/$($Id)/").subclass
             $Return += Invoke-CDBRestCall -RelativeURI $Redirect
         }
