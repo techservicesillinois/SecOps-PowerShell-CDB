@@ -1,0 +1,34 @@
+name: Windows_Ubuntu_Pester
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install dependencies
+      run: Install-Module -Name 'Pester' -Force -SkipPublisherCheck
+      shell: pwsh
+    - name: Run tests
+      run: Invoke-Pester -Path '.\tests'
+      shell: pwsh
+
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install dependencies
+      run: Install-Module -Name 'Pester' -Force -SkipPublisherCheck
+      shell: pwsh
+    - name: Run tests
+      run: Invoke-Pester -Path './tests'
+      shell: pwsh
