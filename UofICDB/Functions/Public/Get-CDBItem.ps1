@@ -59,6 +59,10 @@ function Get-CDBItem {
     }
     
     process {
+        if($Limit -gt 1000){
+            Write-Warning -Message 'CDB only supports limits up to 1000. Consider using -ReturnAll to get the full collection of items.'
+        }
+        
         $Return = [System.Collections.ArrayList]@()
 
         if($Id){
