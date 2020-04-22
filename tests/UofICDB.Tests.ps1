@@ -32,7 +32,6 @@ Describe 'New-CDBConnection'{
             } 
         }
     }
-    }
 }
 
 Describe 'Update-CDBSubclassUris'{
