@@ -88,4 +88,8 @@ Describe 'Get-CDBItem'{
     It 'Resolves relative URIs as properties with recursive specified'{
         (Get-CDBItem -id $TestId -Recursive).support_hours -is [string]
     }
+
+    It 'Returns all possible items when -ReturnAll is specified'{
+        (Get-CDBItem -SubClass 'building' -ReturnAll | Measure-Object).Count -gt 1000 | Should -Be $True
+    }
 }
