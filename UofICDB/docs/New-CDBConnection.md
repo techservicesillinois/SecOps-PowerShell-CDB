@@ -13,7 +13,7 @@ This cmdlet will cache your CDB credentials for the session to be used with the 
 ## SYNTAX
 
 ```
-New-CDBConnection [-Credential] <PSCredential> [<CommonParameters>]
+New-CDBConnection [-Credential] <PSCredential> [-Save] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,6 +41,21 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Save
+{{ Fill Save Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
