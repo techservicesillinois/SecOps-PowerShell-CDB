@@ -19,7 +19,8 @@ Get-CDBItem [-Id <Int32>] [-Recursive] [<CommonParameters>]
 
 ### Filter
 ```
-Get-CDBItem -SubClass <String> [-Filter <String[]>] [-Limit <Int32>] [-Recursive] [<CommonParameters>]
+Get-CDBItem -SubClass <String> [-Filter <String[]>] [-Limit <Int32>] [-ReturnAll] [-Recursive]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,6 +90,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: $Script:Settings.DefaultReturnLimit
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReturnAll
+{{ Fill ReturnAll Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Filter
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

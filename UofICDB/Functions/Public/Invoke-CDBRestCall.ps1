@@ -22,7 +22,8 @@ function Invoke-CDBRestCall {
         [Parameter(Mandatory=$true)]    
         [String]$RelativeURI,
         [String[]]$Filter,
-        [int]$Limit = $Script:Settings.DefaultReturnLimit
+        [int]$Limit = $Script:Settings.DefaultReturnLimit,
+        [int]$Offset = 0
     )
     
     begin {
@@ -33,7 +34,7 @@ function Invoke-CDBRestCall {
     }
     
     process {
-        $QueryString = "?format=json&limit=$($Limit)&"
+        $QueryString = "?format=json&limit=$($Limit)&offset=$($Offset)&"
         $QueryString += $Filter -join '&'
         
         $IVRSplat = @{
