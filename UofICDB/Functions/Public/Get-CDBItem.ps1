@@ -45,6 +45,9 @@ function Get-CDBItem {
         [Parameter(ParameterSetName = 'Filter')]
         [int]$Limit = $Script:Settings.DefaultReturnLimit,
 
+        [Parameter(ParameterSetName = 'Filter')]
+        [Switch]$ReturnAll,
+
         [Parameter(ParameterSetName = 'Id')]
         [int]$Id,
 
@@ -64,6 +67,20 @@ function Get-CDBItem {
             #So when looking up a specific item we have to run two calls.
             $Redirect = (Invoke-CDBRestCall -RelativeURI "/api/v2/item/$($Id)/").subclass
             $Return += Invoke-CDBRestCall -RelativeURI $Redirect
+        }
+        elseif($ReturnAll){
+            if($PSBoundParameters.Keys -contains 'Limit'){
+                Write-Warning -Message 'Ignoring provided limit since ReturnAll was also specified.'
+            }
+
+            [int]$TotalObjects = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Limit 1).meta.total_count
+            Write-Verbose -Message "$($TotalObjects) total objects of subclass $($SubClass) available."
+            [int]$Offset = 0
+            While($TotalObjects -gt 0){
+                $Return += (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Filter $Filter -Limit 1000 -Offset $Offset).Objects
+                $Offset += 1000
+                $TotalObjects -= 1000
+            }
         }
         else{
             $Return += (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Filter $Filter -Limit $Limit).Objects
