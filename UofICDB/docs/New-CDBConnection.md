@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Save
-{{ Fill Save Description }}
+This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions. This will only be readable by the account that saves it on the machine it was saved.
 
 ```yaml
 Type: SwitchParameter

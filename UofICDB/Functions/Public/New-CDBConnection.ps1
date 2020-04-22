@@ -6,8 +6,7 @@
 .PARAMETER Credential
     Your CDB API credentials. This will likely not be your NetID
 .PARAMETER Save
-    This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions.
-    This will only be readable by the account that saves it on the machine it was saved.
+    This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions. This will only be readable by the account that saves it on the machine it was saved.
 .EXAMPLE
     $Credential = Get-Credential
     New-CDBConnection -Credential $Credential
