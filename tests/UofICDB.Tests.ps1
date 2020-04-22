@@ -7,13 +7,29 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
 
 Describe 'New-CDBConnection'{
-    It 'Does not throw'{
-        {New-CDBConnection -Credential $Credential} | Should -Not -Throw
+    context 'Non-saved credentials'{
+        It 'Does not throw'{
+            {New-CDBConnection -Credential $Credential} | Should -Not -Throw
+        }
+
+        InModuleScope 'UofICDB' {
+            It 'Sets the credentials at the module level'{
+                $Script:Authorization -ne [String]::Empty | Should -Be $True
+            }
+        }
     }
 
-    InModuleScope 'UofICDB' {
-        It 'Sets the credentials at the module level'{
-            $Script:Authorization -ne [String]::Empty | Should -Be $True
+    context 'Saved credentials'{
+        New-CDBConnection -Credential $Credential -Save
+
+        InModuleScope 'UofICDB' {
+            It 'Saves credentials when told to'{
+                Test-Path -Path $Script:SavedCredsDir | Should -Be $True
+            }
+
+            It 'Encrypts the content of the file'{
+                {Get-Content -Path $Script:SavedCredsDir | ConvertTo-SecureString} | Should -Not -Throw
+            } 
         }
     }
 }
