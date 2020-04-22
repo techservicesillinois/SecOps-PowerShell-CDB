@@ -15,7 +15,8 @@ It is reccomended to use Get-CDBItem unless you specifically have a use case not
 ## SYNTAX
 
 ```
-Invoke-CDBRestCall [-RelativeURI] <String> [[-Filter] <String[]>] [[-Limit] <Int32>] [<CommonParameters>]
+Invoke-CDBRestCall [-RelativeURI] <String> [[-Filter] <String[]>] [[-Limit] <Int32>] [[-Offset] <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,6 +79,21 @@ Aliases:
 Required: False
 Position: 3
 Default value: $Script:Settings.DefaultReturnLimit
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Offset
+{{ Fill Offset Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

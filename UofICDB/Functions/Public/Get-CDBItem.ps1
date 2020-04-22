@@ -18,11 +18,13 @@ class ValidSubClassGenerator : IValidateSetValuesGenerator {
 .PARAMETER Filter
     An optional set of filters for results. Properties for a given SubClass can be found with Get-CDBSubclassSchema.
 .PARAMETER Limit
-    Limit on results returned. The stock default is 20 and this is controled via the settings.json of the module.
+    Limit on results returned. The stock default is 20 and this is controled via the settings.json of the module. CDB hard caps this at 1000.
 .PARAMETER Id
     The specific Id of the item you are looking for.
 .PARAMETER Recursive
     Attempt to resolve properties of objects that are links to other CDB items.
+.PARAMETER ReturnAll
+    Returns all items of the given SubClass from CDB.
 .EXAMPLE
    Get-CDBItem -id 1770
 
@@ -61,6 +63,10 @@ function Get-CDBItem {
     process {
         if($Limit -gt 1000){
             Write-Warning -Message 'CDB only supports limits up to 1000. Consider using -ReturnAll to get the full collection of items.'
+        }
+
+        if($Recursive -and $ReturnAll){
+            Write-Warning -Message 'The combination of -Recursive and -ReturnAll is very intensive consider ommiting -Recursive.'
         }
         
         $Return = [System.Collections.ArrayList]@()
