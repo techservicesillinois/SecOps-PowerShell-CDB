@@ -15,6 +15,16 @@ Describe 'New-CDBConnection'{
         It 'Sets the credentials at the module level'{
             $Script:Authorization -ne [String]::Empty | Should -Be $True
         }
+
+        It 'Saves credentials when told to'{
+            New-CDBConnection -Credential $Credential -Save
+            Test-Path -Path $Script:SavedCredsDir | Should -Be $True
+        }
+
+        It 'Encrypts the content of the file'{
+            New-CDBConnection -Credential $Credential -Save
+            {Get-Content -Path $Script:SavedCredsDir | ConvertTo-SecureString} | Should -Not -Throw
+        }
     }
 }
 
