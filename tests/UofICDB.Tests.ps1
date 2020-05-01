@@ -97,22 +97,22 @@ Describe 'Get-CDBItem'{
 Describe 'Assert-IPAddress'{
     InModuleScope 'UofICDB' {
         It 'Throws on an invalid IP'{
-            {Assert-IPAddress -IPAdress 'Not an IP'} | Should -Throw
+            {Assert-IPAddress -IPAddress 'Not an IP'} | Should -Throw
         }
 
         It 'Ignores white space'{
-            {Assert-IPAddress -IPAdress '   192.168.1.1    '} | Should -Throw
+            {Assert-IPAddress -IPAddress '   192.168.1.1    '} | Should -Not -Throw
         }
 
         It 'Validates IPv4'{
-            $IPv4 = (Assert-IPAddress -IPAdress '192.168.1.1')
+            $IPv4 = (Assert-IPAddress -IIPAddress '192.168.1.1')
             $IPv4.IsValid | Should -Be $True
             $IPv4.IPAddress | Should -Be '192.168.1.1'
             $IPv4.AddressFamily | Should -Be 'v4'
         }
 
         It 'Validates IPv6'{
-            $IPv4 = (Assert-IPAddress -IPAdress '2001:db8::1:0:0:1')
+            $IPv4 = (Assert-IPAddress -IPAddress '2001:db8::1:0:0:1')
             $IPv4.IsValid | Should -Be $True
             $IPv4.IPAddress | Should -Be '2001:db8::1:0:0:1'
             $IPv4.AddressFamily | Should -Be 'v6'
