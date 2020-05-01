@@ -105,7 +105,7 @@ Describe 'Assert-IPAddress'{
         }
 
         It 'Validates IPv4'{
-            $IPv4 = (Assert-IPAddress -IIPAddress '192.168.1.1')
+            $IPv4 = (Assert-IPAddress -IPAddress '192.168.1.1')
             $IPv4.IsValid | Should -Be $True
             $IPv4.IPAddress | Should -Be '192.168.1.1'
             $IPv4.AddressFamily | Should -Be 'v4'
