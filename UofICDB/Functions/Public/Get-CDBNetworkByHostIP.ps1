@@ -46,7 +46,7 @@ function Get-CDBNetworkByHostIP {
         }
 
         if($Null -eq $Match){
-            Write-Verbose -Message "No CDB network found for $($ResolvedAddress.IPAddress)"
+            throw "No CDB network found for $($ResolvedAddress.IPAddress)"
         }
         else{
             $Match
