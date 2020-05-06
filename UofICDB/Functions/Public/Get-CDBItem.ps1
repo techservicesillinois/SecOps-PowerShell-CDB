@@ -129,7 +129,12 @@ function Get-CDBItem {
             }
         }
 
-        $Return
+        if($Return){
+            $Return
+        }
+        Else{
+            throw "No CDB results for the provided parameters."
+        }
     }
     
     end {
