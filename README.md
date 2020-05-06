@@ -22,9 +22,6 @@ This is a PowerShell integration for Contacts Database (CDB). This is the system
 3) Any new functionality should have associated pester tests added to the UofIDMI.Tests.ps1 file and by extension no PR should be accepted without passing pester tests.
 4) Ensure that cross platform support is kept in mind. The actions are configured to test on Ubuntu as well as Windows.
 
-# To Do
-1) Find what network a provided IP belongs to.
-
 # Use cases
 1) Finding the network owner for a given IP address via pairing with the [UofIDMI module](https://www.powershellgallery.com/packages/UofIDMI).
    ```
