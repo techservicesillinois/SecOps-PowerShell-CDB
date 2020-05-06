@@ -125,7 +125,7 @@ Describe 'Get-CDBItem'{
         }
 
         It 'Throws if no network on CDB contains the IP'{
-            (Get-CDBItem -NetworkByHostIP '128.174.118.224' | Measure-Object).count | Should -Be 1
+            {Get-CDBItem -NetworkByHostIP '192.168.1.1'} | Should -Throw
         }
     }
 
@@ -135,7 +135,7 @@ Describe 'Get-CDBItem'{
         }
 
         It 'Throws if no network on CDB contains the IP'{
-            (Get-CDBItem -NetworkByHostIP '2001:db8::1:0:0:1' | Measure-Object).count | Should -Be 1
+            {Get-CDBItem -NetworkByHostIP '2001:db8::1:0:0:1'} | Should -Throw
         }
     }
 }
