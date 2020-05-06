@@ -51,7 +51,7 @@ PowerShellVersion = '7.0.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @('Subnet')
+# RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -69,7 +69,7 @@ RequiredModules = @('Subnet')
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('Get-CDBItem', 'Get-CDBSubclassSchema', 'Invoke-CDBRestCall', 'New-CDBConnection', 'Get-CDBNetworkByHostIP')
+FunctionsToExport = @('Get-CDBItem', 'Get-CDBSubclassSchema', 'Invoke-CDBRestCall', 'New-CDBConnection')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
