@@ -19,18 +19,19 @@ function Get-CDBNetworkByHostIP {
         
     }
     
-    process {    
-        
+    process {           
         if((Assert-IPAddress -IPAddress $IPAddress).AddressFamily -ne 'v4'){
             throw 'Only IPv4 is supported at this time.'
         }
 
         [int]$TotalObjects = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs['network'].list_endpoint -Limit 1).meta.total_count
         [int]$Offset = 0
+        [int]$ChunkSize = 100
+
 
         While($TotalObjects -gt 0 -or $Match){
             
-            (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs['network'].list_endpoint -Filter $Filter -Limit 100 -Offset $Offset).Objects | ForEach-Object -Process {
+            (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs['network'].list_endpoint -Filter $Filter -Limit $ChunkSize -Offset $Offset).Objects | ForEach-Object -Process {
                 $AddressSplit = ($_.ipv4_network -split '/')
                 $HostAddresses = (Get-Subnet -IP $AddressSplit[0] -MaskBits $AddressSplit[1]).HostAddresses
 
@@ -39,8 +40,8 @@ function Get-CDBNetworkByHostIP {
                     break
                 }
 
-                $Offset += 100
-                $TotalObjects -= 100
+                $Offset += $ChunkSize
+                $TotalObjects -= $ChunkSize
             }
         }
 
