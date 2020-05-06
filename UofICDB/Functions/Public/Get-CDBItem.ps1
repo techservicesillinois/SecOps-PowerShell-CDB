@@ -25,6 +25,8 @@ class ValidSubClassGenerator : IValidateSetValuesGenerator {
     Attempt to resolve properties of objects that are links to other CDB items.
 .PARAMETER ReturnAll
     Returns all items of the given SubClass from CDB.
+.PARAMETER NetworkByHostIP
+    Returns the network item that the given IP address belongs to. Supports both IPv4 and IPv6.
 .EXAMPLE
    Get-CDBItem -id 1770
 
@@ -33,6 +35,10 @@ class ValidSubClassGenerator : IValidateSetValuesGenerator {
    Get-CDBItem -SubClass system -Filter 'ipv4_address=64.22.187.105'
 
    This will return a system with the IP of 64.22.187.105. Keep in mind CDB does not allow filtering on all properties.
+.EXAMPLE
+   Get-CDBItem -NetworkByHostIP '64.22.187.105'
+
+   This will return the network that '64.22.187.105' falls in.
 #>
 function Get-CDBItem {
     [CmdletBinding(DefaultParametersetname='Id')]
@@ -53,6 +59,9 @@ function Get-CDBItem {
         [Parameter(ParameterSetName = 'Id')]
         [int]$Id,
 
+        [Parameter(ParameterSetName = 'NetworkByHostIP')]
+        [String]$NetworkByHostIP,
+
         [Switch]$Recursive
     )
     
@@ -61,6 +70,20 @@ function Get-CDBItem {
     }
     
     process {
+        if($NetworkByHostIP){
+            #This is possible by manually specifying the filter but its tedious and unintuitive for the user so we do the work for them as this is a very common use case.
+            #The IP address family (v4 or v6) is determined and the filter genereted.
+            $ResolvedAddress = Assert-IPAddress -IPAddress $NetworkByHostIP
+            Write-Verbose -Message "IPAddress resolved to $($ResolvedAddress.IPAddress) of address family $($ResolvedAddress.AddressFamily)."
+
+            $Filter = (
+                "ip$($ResolvedAddress.AddressFamily)_address_low__lte=$($ResolvedAddress.IPAddress)",
+                "ip$($ResolvedAddress.AddressFamily)_address_high__gte=$($ResolvedAddress.IPAddress)"
+            )
+
+            $SubClass = 'network'
+        }
+        
         if($Limit -gt 1000){
             Write-Warning -Message 'CDB only supports limits up to 1000. Consider using -ReturnAll to get the full collection of items.'
         }
@@ -83,6 +106,7 @@ function Get-CDBItem {
                 Write-Warning -Message 'Ignoring provided limit since ReturnAll was also specified.'
             }
 
+            #CDB has a hard cap of 1000 items returned in a single call. So to get all results we have to first get the total count from the meta data and then iterate through batches of 1000 results using the offset parameter.
             [int]$TotalObjects = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Limit 1).meta.total_count
             Write-Verbose -Message "$($TotalObjects) total objects of subclass $($SubClass) available."
             [int]$Offset = 0
@@ -105,7 +129,12 @@ function Get-CDBItem {
             }
         }
 
-        $Return
+        if($Return){
+            $Return
+        }
+        Else{
+            throw "No CDB results for the provided parameters."
+        }
     }
     
     end {

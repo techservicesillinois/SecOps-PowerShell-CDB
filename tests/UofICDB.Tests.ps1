@@ -68,6 +68,32 @@ Describe 'Get-CDBSubclassSchema'{
     }
 }
 
+Describe 'Assert-IPAddress'{
+    InModuleScope 'UofICDB' {
+        It 'Throws on an invalid IP'{
+            {Assert-IPAddress -IPAddress 'Not an IP'} | Should -Throw
+        }
+
+        It 'Ignores white space'{
+            {Assert-IPAddress -IPAddress '   192.168.1.1    '} | Should -Not -Throw
+        }
+
+        It 'Validates IPv4'{
+            $IPv4 = (Assert-IPAddress -IPAddress '192.168.1.1')
+            $IPv4.IsValid | Should -Be $True
+            $IPv4.IPAddress | Should -Be '192.168.1.1'
+            $IPv4.AddressFamily | Should -Be 'v4'
+        }
+
+        It 'Validates IPv6'{
+            $IPv4 = (Assert-IPAddress -IPAddress '2001:db8::1:0:0:1')
+            $IPv4.IsValid | Should -Be $True
+            $IPv4.IPAddress | Should -Be '2001:db8::1:0:0:1'
+            $IPv4.AddressFamily | Should -Be 'v6'
+        }
+    }
+}
+
 Describe 'Get-CDBItem'{
     New-CDBConnection -Credential $Credential
     
@@ -92,30 +118,24 @@ Describe 'Get-CDBItem'{
     It 'Returns all possible items when -ReturnAll is specified'{
         (Get-CDBItem -SubClass 'building' -ReturnAll | Measure-Object).Count -gt 1000 | Should -Be $True
     }
-}
 
-Describe 'Assert-IPAddress'{
-    InModuleScope 'UofICDB' {
-        It 'Throws on an invalid IP'{
-            {Assert-IPAddress -IPAddress 'Not an IP'} | Should -Throw
+    context 'IPv4'{
+        It 'Returns network information for a provided IP'{
+            (Get-CDBItem -NetworkByHostIP '128.174.118.224' | Measure-Object).count -gt 0 | Should -Be $True
         }
 
-        It 'Ignores white space'{
-            {Assert-IPAddress -IPAddress '   192.168.1.1    '} | Should -Not -Throw
+        It 'Throws if no network on CDB contains the IP'{
+            {Get-CDBItem -NetworkByHostIP '192.168.1.1'} | Should -Throw
+        }
+    }
+
+    context 'IPv6'{
+        It 'Returns a single network for a provided IP'{
+            (Get-CDBItem -NetworkByHostIP '2620:0:e00:4000::000a' | Measure-Object).count -gt 0 | Should -Be $True
         }
 
-        It 'Validates IPv4'{
-            $IPv4 = (Assert-IPAddress -IPAddress '192.168.1.1')
-            $IPv4.IsValid | Should -Be $True
-            $IPv4.IPAddress | Should -Be '192.168.1.1'
-            $IPv4.AddressFamily | Should -Be 'v4'
-        }
-
-        It 'Validates IPv6'{
-            $IPv4 = (Assert-IPAddress -IPAddress '2001:db8::1:0:0:1')
-            $IPv4.IsValid | Should -Be $True
-            $IPv4.IPAddress | Should -Be '2001:db8::1:0:0:1'
-            $IPv4.AddressFamily | Should -Be 'v6'
+        It 'Throws if no network on CDB contains the IP'{
+            {Get-CDBItem -NetworkByHostIP '2001:db8::1:0:0:1'} | Should -Throw
         }
     }
 }

@@ -25,7 +25,7 @@ function Assert-IPAddress {
         
         #This method will return a boolean result for if the IP is valid or not and store the instofmrion in an IPAddres object.
         if(![System.Net.IpAddress]::TryParse($IPAddress,[ref]$IP)){
-            throw "'$($IPAdress)' is not a valid IP address."
+            throw "'$($IPAddress)' is not a valid IP address."
         }
         else{
             [PSCustomObject]@{
