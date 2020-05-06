@@ -23,6 +23,11 @@ Get-CDBItem -SubClass <String> [-Filter <String[]>] [-Limit <Int32>] [-ReturnAll
  [<CommonParameters>]
 ```
 
+### NetworkByHostIP
+```
+Get-CDBItem [-NetworkByHostIP <String>] [-Recursive] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Returns item(s) from CDB given criteria.
 
@@ -95,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReturnAll
-{{ Fill ReturnAll Description }}
+Returns all items of the given SubClass from CDB.
 
 ```yaml
 Type: SwitchParameter
@@ -120,6 +125,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NetworkByHostIP
+Returns the network item that the given IP address belongs to. Supports both IPv4 and IPv6.
+
+```yaml
+Type: String
+Parameter Sets: NetworkByHostIP
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
