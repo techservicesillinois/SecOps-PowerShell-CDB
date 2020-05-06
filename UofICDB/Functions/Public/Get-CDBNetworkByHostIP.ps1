@@ -20,7 +20,9 @@ function Get-CDBNetworkByHostIP {
     }
     
     process {           
-        if((Assert-IPAddress -IPAddress $IPAddress).AddressFamily -ne 'v4'){
+        $ResolvedAddress = Assert-IPAddress -IPAddress $IPAddress
+        
+        if($ResolvedAddress.AddressFamily -ne 'v4'){
             throw 'Only IPv4 is supported at this time.'
         }
 
@@ -28,14 +30,12 @@ function Get-CDBNetworkByHostIP {
         [int]$Offset = 0
         [int]$ChunkSize = 100
 
-
-        While($TotalObjects -gt 0 -or $Match){
-            
+        While($TotalObjects -gt 0 -or $Match){           
             (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs['network'].list_endpoint -Filter $Filter -Limit $ChunkSize -Offset $Offset).Objects | ForEach-Object -Process {
                 $AddressSplit = ($_.ipv4_network -split '/')
                 $HostAddresses = (Get-Subnet -IP $AddressSplit[0] -MaskBits $AddressSplit[1]).HostAddresses
 
-                if($IPAddress -in $HostAddresses){
+                if($ResolvedAddress.IPAddress -in $HostAddresses){
                     $Match = $_
                     break
                 }
@@ -46,7 +46,7 @@ function Get-CDBNetworkByHostIP {
         }
 
         if($Null -eq $Match){
-            Write-Verbose -Message "No CDB network found for $($IPAddress)"
+            Write-Verbose -Message "No CDB network found for $($ResolvedAddress.IPAddress)"
         }
         else{
             $Match
