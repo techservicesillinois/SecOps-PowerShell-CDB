@@ -102,6 +102,10 @@ Describe 'Get-CDBItem'{
         $null -ne (Get-CDBItem -id $TestId).name | Should -Be $True
     }
 
+    It 'Accepts pipeline input for Id'{
+        ($TestId | Get-CDBItem | Measure-Object).count | Should -Be 1
+    }
+
     It 'Correctly filters'{
         (Get-CDBItem -SubClass system -Filter 'ipv4_address=64.22.187.105').ipv4_address -eq '64.22.187.105' | Should -Be $True
     }
@@ -113,6 +117,7 @@ Describe 'Get-CDBItem'{
 
     It 'Resolves relative URIs as properties with recursive specified'{
         (Get-CDBItem -id $TestId -Recursive).support_hours -is [PSCustomObject] | Should -Be $True
+        (Get-CDBItem -id $TestId -Recursive).contacts[0].name | Should -Not -Be $Null
     }
 
     It 'Returns all possible items when -ReturnAll is specified'{
