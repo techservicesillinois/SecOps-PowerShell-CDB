@@ -31,7 +31,7 @@ New-CDBConnection -Credential $Credential
 
 ### -Credential
 Your CDB API credentials.
-This will likely not bet your NetID
+This will likely not be your NetID
 
 ```yaml
 Type: PSCredential
@@ -46,7 +46,8 @@ Accept wildcard characters: False
 ```
 
 ### -Save
-This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions. This will only be readable by the account that saves it on the machine it was saved.
+This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions.
+This will only be readable by the account that saves it on the machine it was saved.
 
 ```yaml
 Type: SwitchParameter

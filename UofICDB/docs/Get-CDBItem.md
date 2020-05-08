@@ -19,8 +19,7 @@ Get-CDBItem [-Id <Int32>] [-Recursive] [<CommonParameters>]
 
 ### Filter
 ```
-Get-CDBItem -SubClass <String> [-Filter <String[]>] [-Limit <Int32>] [-ReturnAll] [-Recursive]
- [<CommonParameters>]
+Get-CDBItem -SubClass <String> [-Filter <String[]>] [-Limit <Int32>] [-ReturnAll] [<CommonParameters>]
 ```
 
 ### NetworkByHostIP
@@ -47,6 +46,13 @@ Get-CDBItem -SubClass system -Filter 'ipv4_address=64.22.187.105'
 
 This will return a system with the IP of 64.22.187.105.
 Keep in mind CDB does not allow filtering on all properties.
+
+### EXAMPLE 3
+```
+Get-CDBItem -NetworkByHostIP '64.22.187.105'
+```
+
+This will return the network that '64.22.187.105' falls in.
 
 ## PARAMETERS
 
@@ -86,6 +92,7 @@ Accept wildcard characters: False
 ### -Limit
 Limit on results returned.
 The stock default is 20 and this is controled via the settings.json of the module.
+CDB hard caps this at 1000.
 
 ```yaml
 Type: Int32
@@ -125,12 +132,13 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
 ### -NetworkByHostIP
-Returns the network item that the given IP address belongs to. Supports both IPv4 and IPv6.
+Returns the network item that the given IP address belongs to.
+Supports both IPv4 and IPv6.
 
 ```yaml
 Type: String
@@ -146,10 +154,11 @@ Accept wildcard characters: False
 
 ### -Recursive
 Attempt to resolve properties of objects that are links to other CDB items.
+Can only be used with Id and NetworkByHostIP since this can be intensive on CDB with a high result count.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Id, NetworkByHostIP
 Aliases:
 
 Required: False
