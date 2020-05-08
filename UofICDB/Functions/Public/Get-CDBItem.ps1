@@ -22,7 +22,7 @@ class ValidSubClassGenerator : IValidateSetValuesGenerator {
 .PARAMETER Id
     The specific Id of the item you are looking for.
 .PARAMETER Recursive
-    Attempt to resolve properties of objects that are links to other CDB items.
+    Attempt to resolve properties of objects that are links to other CDB items. Can only be used with Id and NetworkByHostIP since this can be intensive on CDB with a high result count.
 .PARAMETER ReturnAll
     Returns all items of the given SubClass from CDB.
 .PARAMETER NetworkByHostIP
@@ -56,12 +56,16 @@ function Get-CDBItem {
         [Parameter(ParameterSetName = 'Filter')]
         [Switch]$ReturnAll,
 
-        [Parameter(ParameterSetName = 'Id')]
+        [parameter(ValueFromPipeline = $true,
+            ValueFromPipelineByPropertyName = $true,
+            ParameterSetName = 'Id')]
         [int]$Id,
 
         [Parameter(ParameterSetName = 'NetworkByHostIP')]
         [String]$NetworkByHostIP,
 
+        [Parameter(ParameterSetName = 'Id')]
+        [Parameter(ParameterSetName = 'NetworkByHostIP')]
         [Switch]$Recursive
     )
     
@@ -86,10 +90,6 @@ function Get-CDBItem {
         
         if($Limit -gt 1000){
             Write-Warning -Message 'CDB only supports limits up to 1000. Consider using -ReturnAll to get the full collection of items.'
-        }
-
-        if($Recursive -and $ReturnAll){
-            Write-Warning -Message 'The combination of -Recursive and -ReturnAll is very intensive consider ommiting -Recursive.'
         }
         
         $Return = [System.Collections.ArrayList]@()
@@ -127,6 +127,8 @@ function Get-CDBItem {
                     $Item.$($_.Name) = Invoke-CDBRestCall -RelativeURI $_.value
                 }
             }
+
+            $Item.contacts = ($Item.contacts).contact.trimstart('/api/v2/item/').trim('/') | Get-CDBItem
         }
 
         if($Return){
