@@ -22,8 +22,31 @@ This is a PowerShell integration for Contacts Database (CDB). This is the system
 3) Any new functionality should have associated pester tests added to the UofIDMI.Tests.ps1 file and by extension no PR should be accepted without passing pester tests.
 4) Ensure that cross platform support is kept in mind. The actions are configured to test on Ubuntu as well as Windows.
 
+# Verbiage explained 
+1) owner_code: This is what CDB refers to the department or banner org code as.
+2) SubClass: The archetype of an item, EX: Network, Building, System, etc.
+3) Schema: The documented properties for items of a given SubClass. Schemas can be viewed with Get-CDBSubclassSchema and the information used to craft a filter for Get-CDBItem.
+
 # Use cases
 1) Finding the network owner for a given IP address via pairing with the [UofIDMI module](https://www.powershellgallery.com/packages/UofIDMI).
    ```
+   #Single IP
    Get-CDBItem -NetworkByHostIP '192.168.1.1' | Get-DMIDepartment
+   ```
+
+   ```
+   #Enumerate through logs to get statistics on which departments are using your service.
+   Import-CSV -Path '.\MyLogs.csv' | Foreach-Object -Process {Get-CDBItem -NetworkByHostIP $_.SourceIP} | 
+      Group-Object -Property 'owner_code' | 
+      Select-Object -Property 'Count', @{ Name = 'Deptname';  Expression = {($_.Name | Get-DMIDepartment).DeptName}}, 'Group'
+
+   Count Deptname
+   ----- --------
+      2 Engineering Administration
+      2 Information Sciences
+   ```
+
+2) Finding all items owned by a given unit with filters. Properties can be identified with Get-CDBSubclassSchema but not all properties can be filtered upon.
+   ```
+   Get-CDBItem -SubClass system -Filter 'owner_code=9A1-AA-AA0-615'
    ```
