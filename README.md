@@ -1,5 +1,4 @@
-![Windows Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Windows_Pester/badge.svg)
-![Linux Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Ubuntu_Pester/badge.svg)
+![Pester Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Pester%20Tests/badge.svg)
 
 # What is This?
 This is a PowerShell integration for Contacts Database (CDB). This is the system of record for system/asset ownership.
