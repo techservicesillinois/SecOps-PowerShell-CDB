@@ -1,15 +1,14 @@
-name: Windows_Pester
+name: Pester Tests
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [pull_request]
 
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v1
@@ -20,5 +19,5 @@ jobs:
       env:
         TestAPIUser: ${{ secrets.TestAPIUser }}
         TestAPIPw: ${{ secrets.TestAPIPw }}
-      run: Invoke-Pester -Path '.\tests' -ErrorAction Stop
+      run: Invoke-Pester -Path './tests' -ErrorAction Stop
       shell: pwsh

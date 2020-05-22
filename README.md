@@ -1,13 +1,13 @@
-![Windows Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Windows_Pester/badge.svg)
-![Linux Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Ubuntu_Pester/badge.svg)
+![Pester Tests](https://github.com/techservicesillinois/SecOps-PowerShell-CDB/workflows/Pester%20Tests/badge.svg)
 
 # What is This?
 This is a PowerShell integration for Contacts Database (CDB). This is the system of record for system/asset ownership.
 
 # How do I install it?
 1) Install Powershell 7, you have options for this. [Chocolatey](https://chocolatey.org/packages/powershell-core) or [GitHub](https://github.com/PowerShell/PowerShell/releases).
-2) Use the provided Makefile or manually copy the .\UofICDB folder to a valid PSModulePath directory. The Makefile will also install the UofIDMI module from the PSGallery.
-3) The below will prompt you for credentials and then encrypts them on your machine at 'C:\Users\$USERNAME\AppData\Local\PSCDBAuth.txt' on Windows and '/home//.local/share/PSCDBAuth.txt' on Linux
+2) At this point you can install from the [PSGallery](https://www.powershellgallery.com/packages/UofICDB) for the latest stable build or continue with the steps to install from the repository.
+3) Use the provided Makefile or manually copy the .\UofICDB folder to a valid PSModulePath directory. The Makefile will also install the UofIDMI module from the PSGallery.
+4) The below will prompt you for credentials and then encrypts them on your machine at 'C:\Users\$USERNAME\AppData\Local\PSCDBAuth.txt' on Windows and '/home//.local/share/PSCDBAuth.txt' on Linux
    ```
    Import-Module UofICDB
    New-CDBConnection -Save
