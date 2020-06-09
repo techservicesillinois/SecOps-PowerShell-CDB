@@ -1,10 +1,12 @@
 [String]$ModuleRoot = Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath 'UofICDB'
 Import-Module -Name $ModuleRoot -ArgumentList $True
 
-$secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
+BeforeAll {
+    $secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
 
-[int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
+    [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
+}
 
 Describe 'New-CDBConnection'{
     context 'Non-saved credentials'{
