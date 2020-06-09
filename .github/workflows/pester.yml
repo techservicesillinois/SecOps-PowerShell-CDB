@@ -19,5 +19,5 @@ jobs:
       env:
         TestAPIUser: ${{ secrets.TestAPIUser }}
         TestAPIPw: ${{ secrets.TestAPIPw }}
-      run: Invoke-Pester -Path './tests' -ErrorAction Stop
+      run: Invoke-Pester -Path './tests/' -CI
       shell: pwsh

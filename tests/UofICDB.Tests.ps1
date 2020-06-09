@@ -20,7 +20,9 @@ Describe 'New-CDBConnection'{
     }
 
     context 'Saved credentials'{
-        New-CDBConnection -Credential $Credential -Save
+        BeforeAll {
+            New-CDBConnection -Credential $Credential -Save
+        }
 
         InModuleScope 'UofICDB' {
             It 'Saves credentials when told to'{
@@ -35,7 +37,9 @@ Describe 'New-CDBConnection'{
 }
 
 Describe 'Update-CDBSubclassUris'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
 
     InModuleScope 'UofICDB' {      
         It 'Does not throw'{
@@ -53,7 +57,9 @@ Describe 'Update-CDBSubclassUris'{
 }
 
 Describe 'Get-CDBSubclassSchema'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
 
     It 'Does not throw'{
         {Get-CDBSubclassSchema -SubClass 'network'} | Should -Not -Throw
@@ -95,7 +101,9 @@ Describe 'Assert-IPAddress'{
 }
 
 Describe 'Get-CDBItem'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
     
     It 'Handles the redirect off an Id'{
         $null -eq (Get-CDBItem -id $TestId).subclass | Should -Be $True
