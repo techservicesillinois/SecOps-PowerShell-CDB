@@ -1,10 +1,12 @@
 [String]$ModuleRoot = Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath 'UofICDB'
 Import-Module -Name $ModuleRoot -ArgumentList $True
 
-$secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
+BeforeAll {
+    $secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
 
-[int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
+    [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
+}
 
 Describe 'New-CDBConnection'{
     context 'Non-saved credentials'{
@@ -20,7 +22,9 @@ Describe 'New-CDBConnection'{
     }
 
     context 'Saved credentials'{
-        New-CDBConnection -Credential $Credential -Save
+        BeforeAll {
+            New-CDBConnection -Credential $Credential -Save
+        }
 
         InModuleScope 'UofICDB' {
             It 'Saves credentials when told to'{
@@ -35,7 +39,9 @@ Describe 'New-CDBConnection'{
 }
 
 Describe 'Update-CDBSubclassUris'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
 
     InModuleScope 'UofICDB' {      
         It 'Does not throw'{
@@ -53,7 +59,9 @@ Describe 'Update-CDBSubclassUris'{
 }
 
 Describe 'Get-CDBSubclassSchema'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
 
     It 'Does not throw'{
         {Get-CDBSubclassSchema -SubClass 'network'} | Should -Not -Throw
@@ -95,7 +103,9 @@ Describe 'Assert-IPAddress'{
 }
 
 Describe 'Get-CDBItem'{
-    New-CDBConnection -Credential $Credential
+    BeforeAll {
+        New-CDBConnection -Credential $Credential
+    }
     
     It 'Handles the redirect off an Id'{
         $null -eq (Get-CDBItem -id $TestId).subclass | Should -Be $True
