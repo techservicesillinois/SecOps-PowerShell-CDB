@@ -7,7 +7,7 @@
    Update-CDBSubclassUris
 #>
 function Update-CDBSubclassUris {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
     )
 

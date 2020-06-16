@@ -12,7 +12,7 @@
     New-CDBConnection -Credential $Credential
 #>
 function New-CDBConnection {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory=$true)]
         [System.Management.Automation.PSCredential]$Credential,
