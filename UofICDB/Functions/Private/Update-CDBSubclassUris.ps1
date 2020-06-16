@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
    Creates a cache of sorts for the SubClass URIs in CDB and enables the tab completion of this information in other cmdlets.
 .DESCRIPTION
@@ -10,14 +10,14 @@ function Update-CDBSubclassUris {
     [CmdletBinding()]
     param (
     )
-    
+
     begin {
-        
+
     }
-    
+
     process {
         $Script:SubClassURIs.clear()
-        
+
         #A GET on the root of the api gives a listing of all SubClasses and their relevant URIs.
         $Return = Invoke-CDBRestCall -RelativeURI '/api/v2/'
 
@@ -27,8 +27,8 @@ function Update-CDBSubclassUris {
             $Script:SubClassURIs.add($_,$Return.$_)
         }
     }
-    
+
     end {
-        
+
     }
 }

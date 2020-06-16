@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
    This cmdlet will cache your CDB credentials for the session to be used with the other cmdlets in the UofICDB module.
 .DESCRIPTION
@@ -18,11 +18,11 @@ function New-CDBConnection {
         [System.Management.Automation.PSCredential]$Credential,
         [Switch]$Save
     )
-    
+
     begin {
-        
+
     }
-    
+
     process {
         $Script:Authorization = 'Basic {0}' -f ([Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $Credential.UserName,$Credential.GetNetworkCredential().Password))))
         Update-CDBSubclassUris
@@ -33,8 +33,8 @@ function New-CDBConnection {
             $Script:Authorization | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString | Out-File -FilePath $Script:SavedCredsDir -Force
         }
     }
-    
+
     end {
-        
+
     }
 }
