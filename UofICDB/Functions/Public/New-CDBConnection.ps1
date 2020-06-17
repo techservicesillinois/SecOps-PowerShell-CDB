@@ -24,13 +24,15 @@ function New-CDBConnection {
     }
 
     process {
-        $Script:Authorization = 'Basic {0}' -f ([Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $Credential.UserName,$Credential.GetNetworkCredential().Password))))
+        $Script:Authorization = $Credential
         Update-CDBSubclassUris
 
         if($Save){
-            #documentation for the encryption can be found here: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertfrom-securestring?view=powershell-7 and https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection
-            #Windows Data Protection API (DPAPI) is used in this context.
-            $Script:Authorization | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString | Out-File -FilePath $Script:SavedCredsDir -Force
+            @{
+                Username = $Credential.Username
+                # The password is encrypted when it's written to disk and is only retrievable by the user/system combination.
+                Password = $Credential.Password | ConvertFrom-SecureString
+            } | ConvertTo-Json | Out-File -FilePath $Script:SavedCredsDir
         }
     }
 

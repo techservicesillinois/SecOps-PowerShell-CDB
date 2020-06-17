@@ -27,7 +27,7 @@ function Invoke-CDBRestCall {
     )
 
     begin {
-        if($Script:Authorization -eq [String]::Empty){
+        if($null -eq $Script:Authorization){
             Write-Verbose -Message 'No CDB connection established. Please provide credentials.'
             New-CDBConnection
         }
@@ -39,7 +39,7 @@ function Invoke-CDBRestCall {
 
         $IVRSplat = @{
             'Headers' = @{
-                'Authorization' = $Script:Authorization
+                'Authorization' = ('Basic {0}' -f ([Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $Script:Authorization.UserName,$Script:Authorization.GetNetworkCredential().Password)))))
             }
 
             'Uri' = "$($Script:Settings.CDBURI)$($RelativeURI)$($QueryString)"
