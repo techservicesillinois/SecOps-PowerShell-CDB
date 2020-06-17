@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
    Determines the validity and address family of a provided IP address.
 .DESCRIPTION
@@ -11,18 +11,18 @@ Determines the validity and address family of a provided IP address.
 function Assert-IPAddress {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]    
+        [Parameter(Mandatory=$true)]
         [String]$IPAddress
     )
-    
+
     begin {
-        
+
     }
-    
+
     process {
         $IPAddress = $IPAddress.trim()
         [System.Net.IPAddress]$IP = $Null
-        
+
         #This method will return a boolean result for if the IP is valid or not and store the instofmrion in an IPAddres object.
         if(![System.Net.IpAddress]::TryParse($IPAddress,[ref]$IP)){
             throw "'$($IPAddress)' is not a valid IP address."
@@ -35,8 +35,8 @@ function Assert-IPAddress {
             }
         }
     }
-    
+
     end {
-        
+
     }
 }

@@ -1,4 +1,4 @@
-using namespace System.Management.Automation
+﻿using namespace System.Management.Automation
 
 #These classes are a necessary workaround to use variables as validate sets. Hopefully Microsoft bakes this in someday.
 class ValidSubClassGenerator : IValidateSetValuesGenerator {
@@ -68,11 +68,11 @@ function Get-CDBItem {
         [Parameter(ParameterSetName = 'NetworkByHostIP')]
         [Switch]$Recursive
     )
-    
+
     begin {
-        
+
     }
-    
+
     process {
         if($NetworkByHostIP){
             #This is possible by manually specifying the filter but its tedious and unintuitive for the user so we do the work for them as this is a very common use case.
@@ -87,11 +87,11 @@ function Get-CDBItem {
 
             $SubClass = 'network'
         }
-        
+
         if($Limit -gt 1000){
             Write-Warning -Message 'CDB only supports limits up to 1000. Consider using -ReturnAll to get the full collection of items.'
         }
-        
+
         $Return = [System.Collections.ArrayList]@()
 
         if($Id){
@@ -138,8 +138,8 @@ function Get-CDBItem {
             throw "No CDB results for the provided parameters."
         }
     }
-    
+
     end {
-        
+
     }
 }

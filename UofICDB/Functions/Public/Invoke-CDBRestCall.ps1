@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
    Makes a REST method call on the given relative URI for CDB. Utilizes credentials created with New-CDBConnection.
    It is reccomended to use Get-CDBItem unless you specifically have a use case not supported by that cmdlet.
@@ -19,24 +19,24 @@
 function Invoke-CDBRestCall {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]    
+        [Parameter(Mandatory=$true)]
         [String]$RelativeURI,
         [String[]]$Filter,
         [int]$Limit = $Script:Settings.DefaultReturnLimit,
         [int]$Offset = 0
     )
-    
+
     begin {
         if($Script:Authorization -eq [String]::Empty){
             Write-Verbose -Message 'No CDB connection established. Please provide credentials.'
             New-CDBConnection
         }
     }
-    
+
     process {
         $QueryString = "?format=json&limit=$($Limit)&offset=$($Offset)&"
         $QueryString += $Filter -join '&'
-        
+
         $IVRSplat = @{
             'Headers' = @{
                 'Authorization' = $Script:Authorization
@@ -47,8 +47,8 @@ function Invoke-CDBRestCall {
 
         Invoke-RestMethod @IVRSplat
     }
-    
+
     end {
-        
+
     }
 }

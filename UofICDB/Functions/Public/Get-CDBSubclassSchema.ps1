@@ -1,4 +1,4 @@
-using namespace System.Management.Automation
+﻿using namespace System.Management.Automation
 
 #These classes are a necessary workaround to use variables as validate sets. Hopefully Microsoft bakes this in someday.
 class ValidSubClassGenerator : IValidateSetValuesGenerator {
@@ -25,18 +25,18 @@ function Get-CDBSubclassSchema {
         [ValidateSet( [ValidSubClassGenerator] )]
         [String]$SubClass
     )
-    
+
     begin {
-        
+
     }
-    
+
     process {
         $Schema = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].schema).fields
         $Schema | Add-Member -Name 'Subclass' -MemberType NoteProperty -Value $SubClass
         $Schema
     }
-    
+
     end {
-        
+
     }
 }
