@@ -16,7 +16,7 @@ Describe 'New-CDBConnection'{
 
         InModuleScope 'UofICDB' {
             It 'Sets the credentials at the module level'{
-                $Script:Authorization -ne [String]::Empty | Should -Be $True
+                $null -ne $Script:Authorization | Should -Be $True
             }
         }
     }
@@ -31,8 +31,8 @@ Describe 'New-CDBConnection'{
                 Test-Path -Path $Script:SavedCredsDir | Should -Be $True
             }
 
-            It 'Encrypts the content of the file'{
-                {Get-Content -Path $Script:SavedCredsDir | ConvertTo-SecureString} | Should -Not -Throw
+            It 'Encrypts the saved password'{
+                { (Get-Content -Path $Script:SavedCredsDir | ConvertFrom-Json).password | ConvertTo-SecureString } | Should -Not -Throw
             } 
         }
     }
