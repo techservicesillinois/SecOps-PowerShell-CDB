@@ -34,6 +34,24 @@ Describe 'New-CDBConnection'{
     }
 }
 
+Describe 'Remove-CDBConnection'{
+    BeforeAll {
+        New-CDBConnection -Credential $Credential -Save
+    }
+
+    InModuleScope 'UofICDB' {
+        It 'Clears session credentials'{
+            Remove-CDBConnection
+            $Null -eq $Script:Authorization | Should -Be $True
+        }
+
+        It 'Clears saved credentials'{
+            Remove-CDBConnection -ClearSaved
+            Test-Path -Path $Script:SavedCredsDir | Should -Be $False
+        }
+    }
+}
+
 Describe 'Update-CDBSubclassUris'{
     New-CDBConnection -Credential $Credential
 
