@@ -1,0 +1,2 @@
+v1.1
+- Added Remove-CDBConnection to easily clear session and saved credentials.
