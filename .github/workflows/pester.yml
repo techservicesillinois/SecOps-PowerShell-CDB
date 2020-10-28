@@ -12,12 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: Install-Module -Name 'Pester' -Force -SkipPublisherCheck
-      shell: pwsh
     - name: Run tests
       env:
         TestAPIUser: ${{ secrets.TestAPIUser }}
         TestAPIPw: ${{ secrets.TestAPIPw }}
-      run: Write-Output "foo bar $ENV:TestAPIUser"
+      run: ./tests/UofICDB.Tests.ps1
       shell: pwsh
