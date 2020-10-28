@@ -1,0 +1,19 @@
+name: Pester Tests
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run publish script
+        env:
+          NuGetApiKey: ${{ secrets.NuGetApiKey }}
+        run: .github\workflows\PublishToGallery.ps1
+        shell: pwsh
