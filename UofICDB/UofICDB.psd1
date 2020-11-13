@@ -12,7 +12,7 @@
 RootModule = 'UofICDB.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.1'
+ModuleVersion = '1.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,7 +69,14 @@ PowerShellVersion = '7.0.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('Get-CDBItem', 'Get-CDBSubclassSchema', 'Invoke-CDBRestCall', 'New-CDBConnection', 'Remove-CDBConnection')
+FunctionsToExport = @(
+    'Get-CDBItem',
+    'Get-CDBItemPermission',
+    'Get-CDBSubclassSchema',
+    'Invoke-CDBRestCall',
+    'New-CDBConnection',
+    'Remove-CDBConnection'
+)
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

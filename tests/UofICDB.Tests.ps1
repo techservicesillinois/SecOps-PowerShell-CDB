@@ -172,3 +172,13 @@ Describe 'Get-CDBItem'{
         }
     }
 }
+
+Describe 'Get-CDBItemPermission'{
+    It 'Returns permissions for a given item'{
+        (Get-CDBItemPermission -id 1778).permissions | Should -Not -BeNullOrEmpty
+    }
+
+    It 'Accepts pipeline input'{
+        {Get-CDBItem -Id 1778 | Get-CDBItemPermission} | Should -Not -Throw
+    }
+}
