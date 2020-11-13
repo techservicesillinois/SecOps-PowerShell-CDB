@@ -2,8 +2,8 @@
 Import-Module -Name $ModuleRoot -ArgumentList $True
 
 BeforeAll {
-    $secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
-    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
+    $secStringPassword = ConvertTo-SecureString -String 'password' -AsPlainText
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ('username', $secStringPassword)
 
     [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
 }
@@ -170,5 +170,15 @@ Describe 'Get-CDBItem'{
         It 'Throws if no network on CDB contains the IP'{
             {Get-CDBItem -NetworkByHostIP '2001:db8::1:0:0:1'} | Should -Throw
         }
+    }
+}
+
+Describe 'Get-CDBItemPermission'{
+    It 'Returns permissions for a given item'{
+        (Get-CDBItemPermission -id 1778).permissions | Should -Not -BeNullOrEmpty
+    }
+
+    It 'Accepts pipeline input'{
+        {Get-CDBItem -Id 1778 | Get-CDBItemPermission} | Should -Not -Throw
     }
 }
