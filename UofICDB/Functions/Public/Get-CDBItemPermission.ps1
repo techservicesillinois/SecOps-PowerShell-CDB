@@ -24,10 +24,10 @@ function Get-CDBItemPermission {
         $Return = (Invoke-CDBRestCall -RelativeURI "/api/v1/item/$($Id)/?permissions=true").$Id | Select-Object -Property 'id','name','permissions'
 
         $Properties = @(
-            @{ Name = 'NetId';  Expression = {$_.Name}},
-            @{ Name = 'Iris';  Expression = {$_.Value.Iris}},
-            @{ Name = 'ISSRequests';  Expression = {$_.Value.'ISS Requests' -eq 'Yes' ? $True : $False}},
-            @{ Name = 'DNSRequests';  Expression = {$_.Value.'DNS Requests' -eq 'Yes' ? $True : $False}}
+            @{Name = 'NetId';  Expression = {$_.Name}},
+            @{Name = 'Iris';  Expression = {$_.Value.Iris}},
+            @{Name = 'ISSRequests';  Expression = {$_.Value.'ISS Requests' -eq 'Yes' ? $True : $False}},
+            @{Name = 'DNSRequests';  Expression = {$_.Value.'DNS Requests' -eq 'Yes' ? $True : $False}}
         )
         
         [PSCustomObject]@{
