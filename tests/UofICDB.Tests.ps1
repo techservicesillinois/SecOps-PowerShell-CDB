@@ -2,8 +2,8 @@
 Import-Module -Name $ModuleRoot -ArgumentList $True
 
 BeforeAll {
-    $secStringPassword = ConvertTo-SecureString -String 'password' -AsPlainText
-    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ('username', $secStringPassword)
+    $secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
 
     [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
 }
