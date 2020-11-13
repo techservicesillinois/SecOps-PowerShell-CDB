@@ -34,8 +34,11 @@ function Invoke-CDBRestCall {
     }
 
     process {
-        $QueryString = "?format=json&limit=$($Limit)&offset=$($Offset)&"
-        $QueryString += $Filter -join '&'
+        #These querystring additions are only applicable for v2 of the api and some features require using v1
+        if($RelativeURI -like "/api/v2/*"){
+            $QueryString = "?format=json&limit=$($Limit)&offset=$($Offset)&"
+            $QueryString += $Filter -join '&'
+        }
 
         $IVRSplat = @{
             'Headers' = @{
