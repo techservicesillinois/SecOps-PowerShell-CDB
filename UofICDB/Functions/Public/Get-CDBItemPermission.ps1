@@ -29,7 +29,7 @@ function Get-CDBItemPermission {
             @{Name = 'ISSRequests';  Expression = {$_.Value.'ISS Requests' -eq 'Yes' ? $True : $False}},
             @{Name = 'DNSRequests';  Expression = {$_.Value.'DNS Requests' -eq 'Yes' ? $True : $False}}
         )
-        
+
         [PSCustomObject]@{
             Id = $Return.Id
             Name = $Return.Name
