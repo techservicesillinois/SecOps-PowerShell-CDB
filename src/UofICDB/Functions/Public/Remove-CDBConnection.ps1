@@ -17,18 +17,20 @@ function Remove-CDBConnection {
     )
 
     begin {
-
     }
 
     process {
-        $Script:Authorization = $Null
+        if($PSCmdlet.ShouldProcess("Clearing CDB connection")){
+            $Script:Authorization = $Null
+        }
 
-        if($ClearSaved){
-            Remove-Item -Path $Script:SavedCredsDir -Force
+        if($PSCmdlet.ShouldProcess("Removing cached credentials at $($Script:SavedCredsDir)")){
+            if($ClearSaved){
+                Remove-Item -Path $Script:SavedCredsDir -Force
+            }
         }
     }
 
     end {
-
     }
 }
