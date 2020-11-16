@@ -20,23 +20,25 @@ function New-CDBConnection {
     )
 
     begin {
-
     }
 
     process {
-        $Script:Authorization = $Credential
-        Update-CDBSubclassUris
+        if($PSCmdlet.ShouldProcess("Creating session for $($Credential.UserName)")){
+            $Script:Authorization = $Credential
+            Update-CDBSubclassUris
+        }
 
-        if($Save){
-            @{
-                Username = $Credential.Username
-                # The password is encrypted when it's written to disk and is only retrievable by the user/system combination.
-                Password = $Credential.Password | ConvertFrom-SecureString
-            } | ConvertTo-Json | Out-File -FilePath $Script:SavedCredsDir
+        if($PSCmdlet.ShouldProcess("Caching credentials for $($Credential.UserName) at $($Script:SavedCredsDir)")){
+            if($Save){
+                @{
+                    Username = $Credential.Username
+                    # The password is encrypted when it's written to disk and is only retrievable by the user/system combination.
+                    Password = $Credential.Password | ConvertFrom-SecureString
+                } | ConvertTo-Json | Out-File -FilePath $Script:SavedCredsDir
+            }
         }
     }
 
     end {
-
     }
 }
