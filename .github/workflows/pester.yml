@@ -1,7 +1,9 @@
 name: Pester Tests
 
 on: [pull_request]
-
+    paths:
+    - 'src/**'
+    - 'test/**'
 jobs:
   build:
 
@@ -19,5 +21,5 @@ jobs:
       env:
         TestAPIUser: ${{ secrets.TestAPIUser }}
         TestAPIPw: ${{ secrets.TestAPIPw }}
-      run: Invoke-Pester -Path './tests/' -CI -Output Detailed
+      run: Invoke-Pester -Path './test/' -CI -Output Detailed
       shell: pwsh

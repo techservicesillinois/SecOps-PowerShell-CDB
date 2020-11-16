@@ -1,7 +1,8 @@
 name: ScriptAnalyzer
 
 on: [pull_request]
-
+    paths:
+    - 'src/**'
 jobs:
   build:
 
@@ -16,5 +17,5 @@ jobs:
       run: Install-Module -Name 'PSScriptAnalyzer' -Force -SkipPublisherCheck
       shell: pwsh
     - name: ScriptAnalyzer
-      run: Invoke-ScriptAnalyzer -Path '.\UofICDB\' -Recurse -EnableExit
+      run: Invoke-ScriptAnalyzer -Path '.\src\' -Recurse -EnableExit
       shell: pwsh
