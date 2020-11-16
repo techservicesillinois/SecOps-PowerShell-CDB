@@ -1,4 +1,4 @@
-[String]$ModuleRoot = Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath 'UofICDB'
+[String]$ModuleRoot = Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath 'src/UofICDB'
 Import-Module -Name $ModuleRoot -ArgumentList $True
 
 BeforeAll {
