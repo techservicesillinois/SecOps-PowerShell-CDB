@@ -5,49 +5,36 @@ online version:
 schema: 2.0.0
 ---
 
-# New-CDBConnection
+# Remove-CDBConnection
 
 ## SYNOPSIS
-This cmdlet will cache your CDB credentials for the session to be used with the other cmdlets in the UofICDB module.
+This cmdlet will clear cached CDB credentials.
 
 ## SYNTAX
 
 ```
-New-CDBConnection [-Credential] <PSCredential> [-Save] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-CDBConnection [-ClearSaved] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet will cache your CDB credentials for the session to be used with the other cmdlets in the UofICDB module.
+This cmdlet will clear cached CDB credentials.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$Credential = Get-Credential
-New-CDBConnection -Credential $Credential
+Remove-CDBConnection
+```
+
+### EXAMPLE 2
+```
+Remove-CDBConnection -ClearSaved
 ```
 
 ## PARAMETERS
 
-### -Credential
-Your CDB API credentials.
-This will likely not be your NetID
-
-```yaml
-Type: PSCredential
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Save
-This will encrypt the encoded credentials and store them $ENV:LOCALAPPDATA\PSCDBAuth.txt on Windows or /home//.local/share/ on Linux for use between sessions.
-This will only be readable by the account that saves it on the machine it was saved.
+### -ClearSaved
+This will remove the saved credentials as well as the session credentials.
 
 ```yaml
 Type: SwitchParameter
@@ -62,7 +49,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
