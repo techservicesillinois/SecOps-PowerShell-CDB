@@ -2,6 +2,8 @@ name: ScriptAnalyzer
 
 on:
   pull_request:
+    branches:
+    - main
     paths:
     - 'src/**'
 
