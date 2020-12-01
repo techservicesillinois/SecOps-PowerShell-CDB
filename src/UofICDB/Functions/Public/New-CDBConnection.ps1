@@ -28,8 +28,8 @@ function New-CDBConnection {
             Update-CDBSubclassUris
         }
 
-        if($PSCmdlet.ShouldProcess("Caching credentials for $($Credential.UserName) at $($Script:SavedCredsDir)")){
-            if($Save){
+        if($Save){
+            if($PSCmdlet.ShouldProcess("Caching credentials for $($Credential.UserName) at $($Script:SavedCredsDir)")){
                 @{
                     Username = $Credential.Username
                     # The password is encrypted when it's written to disk and is only retrievable by the user/system combination.
