@@ -23,9 +23,9 @@ function Remove-CDBConnection {
         if($PSCmdlet.ShouldProcess("Clearing CDB connection")){
             $Script:Authorization = $Null
         }
-        
+
         if($ClearSaved){
-            if($PSCmdlet.ShouldProcess("Removing cached credentials at $($Script:SavedCredsDir)")){     
+            if($PSCmdlet.ShouldProcess("Removing cached credentials at $($Script:SavedCredsDir)")){
                 Remove-Item -Path $Script:SavedCredsDir -Force
             }
         }
