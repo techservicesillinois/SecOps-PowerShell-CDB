@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1] 2021-01-21
 ### Added
-- Properly implemented SupportsShouldProcess for New-CDBConnection and New-CDBConnection
+- Properly implemented SupportsShouldProcess for New-CDBConnection and Remove-CDBConnection
 ### Changed
 ### Removed
 
