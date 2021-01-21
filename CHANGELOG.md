@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
+- Properly implemented SupportsShouldProcess for New-CDBConnection and New-CDBConnection 
 ### Changed
 ### Removed
 
