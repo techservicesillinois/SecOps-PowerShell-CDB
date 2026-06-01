@@ -106,14 +106,14 @@ function Get-CDBItem {
                 Write-Warning -Message 'Ignoring provided limit since ReturnAll was also specified.'
             }
 
-            #CDB has a hard cap of 1000 items returned in a single call. So to get all results we have to first get the total count from the meta data and then iterate through batches of 1000 results using the offset parameter.
+            #To get all results we have to first get the total count from the meta data and then iterate through batches of 200 results using the offset parameter.
             [int]$TotalObjects = (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Limit 1).meta.total_count
             Write-Verbose -Message "$($TotalObjects) total objects of subclass $($SubClass) available."
             [int]$Offset = 0
             While($TotalObjects -gt 0){
-                $Return += (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Filter $Filter -Limit 1000 -Offset $Offset).Objects
-                $Offset += 1000
-                $TotalObjects -= 1000
+                $Return += (Invoke-CDBRestCall -RelativeURI $Script:SubClassURIs[$SubClass].list_endpoint -Filter $Filter -Limit 200 -Offset $Offset).Objects
+                $Offset += 200
+                $TotalObjects -= 200
             }
         }
         else{
