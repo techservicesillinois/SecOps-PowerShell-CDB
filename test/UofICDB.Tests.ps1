@@ -5,7 +5,7 @@ BeforeAll {
     $secStringPassword = ConvertTo-SecureString -String $ENV:TestAPIPw -AsPlainText
     $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($ENV:TestAPIUser, $secStringPassword)
 
-    [int]$TestId = 1770 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
+    [int]$TestId = 8777 #This will likely break at some point and need updating. We have tests based around this object existing in CDB.
 }
 
 Describe 'New-CDBConnection'{
@@ -33,7 +33,7 @@ Describe 'New-CDBConnection'{
 
             It 'Encrypts the saved password'{
                 { (Get-Content -Path $Script:SavedCredsDir | ConvertFrom-Json).password | ConvertTo-SecureString } | Should -Not -Throw
-            } 
+            }
         }
     }
 }
@@ -61,7 +61,7 @@ Describe 'Update-CDBSubclassUris'{
         New-CDBConnection -Credential $Credential
     }
 
-    InModuleScope 'UofICDB' {      
+    InModuleScope 'UofICDB' {
         It 'Does not throw'{
             {Update-CDBSubclassUris} | Should -Not -Throw
         }
@@ -124,7 +124,7 @@ Describe 'Get-CDBItem'{
     BeforeAll {
         New-CDBConnection -Credential $Credential
     }
-    
+
     It 'Handles the redirect off an Id'{
         $null -eq (Get-CDBItem -id $TestId).subclass | Should -Be $True
         $null -ne (Get-CDBItem -id $TestId).name | Should -Be $True
@@ -175,10 +175,10 @@ Describe 'Get-CDBItem'{
 
 Describe 'Get-CDBItemPermission'{
     It 'Returns permissions for a given item'{
-        (Get-CDBItemPermission -id 1778).permissions | Should -Not -BeNullOrEmpty
+        (Get-CDBItemPermission -id 8777).permissions | Should -Not -BeNullOrEmpty
     }
 
     It 'Accepts pipeline input'{
-        {Get-CDBItem -Id 1778 | Get-CDBItemPermission} | Should -Not -Throw
+        {Get-CDBItem -Id 8777 | Get-CDBItemPermission} | Should -Not -Throw
     }
 }
