@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 
+## [1.2.1] 2026-06-01
+### Changed
+- Get-CDBItem -Returnall parameter changed to use limit of 200 to reduce errors from service
+
 ## [1.2.0] 2023-10-03
 ### Changed
 - Changed endpoint in settings.json from cdb.cites.illinois.edu to cdb.techservices.illinois.edu as the old endpoint will be going away
