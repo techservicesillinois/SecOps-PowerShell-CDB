@@ -175,10 +175,10 @@ Describe 'Get-CDBItem'{
 
 Describe 'Get-CDBItemPermission'{
     It 'Returns permissions for a given item'{
-        (Get-CDBItemPermission -id 8777).permissions | Should -Not -BeNullOrEmpty
+        (Get-CDBItemPermission -id $TestId).permissions | Should -Not -BeNullOrEmpty
     }
 
     It 'Accepts pipeline input'{
-        {Get-CDBItem -Id 8777 | Get-CDBItemPermission} | Should -Not -Throw
+        {Get-CDBItem -Id $TestId | Get-CDBItemPermission} | Should -Not -Throw
     }
 }
